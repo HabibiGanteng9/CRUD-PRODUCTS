@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from 'react';
 
-// Sesuaikan property form dengan struktur tabel (id_category)
 const emptyForm = { name: '', description: '', id_category: '', price: '' };
 
 export default function Home() {
@@ -42,7 +41,7 @@ export default function Home() {
     setForm({
       name: product.name,
       description: product.description || '',
-      id_category: product.id_category || '', // Menyesuaikan dengan data dari DB
+      id_category: product.id_category || '',
       price: product.price,
     });
   }
@@ -60,7 +59,6 @@ export default function Home() {
       const url = editingId ? `/api/products/${editingId}` : '/api/products';
       const method = editingId ? 'PUT' : 'POST';
 
-      // form state sekarang sudah berisi id_category yang diambil dari dropdown
       const res = await fetch(url, {
         method,
         headers: { 'Content-Type': 'application/json' },
@@ -179,6 +177,7 @@ export default function Home() {
         <thead>
           <tr>
             <th>Nama</th>
+            <th>Kategori</th>
             <th>Deskripsi</th>
             <th>Harga</th>
             <th>Aksi</th>
@@ -188,6 +187,7 @@ export default function Home() {
           {products.map((p) => (
             <tr key={p.id}>
               <td>{p.name}</td>
+              <td>{p.name_category || '-'}</td>
               <td>{p.description}</td>
               <td>Rp {Number(p.price).toLocaleString('id-ID')}</td>
               <td>
