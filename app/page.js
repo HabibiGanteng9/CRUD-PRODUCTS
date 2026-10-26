@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from 'react';
 
-const emptyForm = { name: '', description: '', price: '' };
+// Sesuaikan property form dengan struktur tabel (id_category)
+const emptyForm = { name: '', description: '', id_category: '', price: '' };
 
 export default function Home() {
   const [products, setProducts] = useState([]);
@@ -41,6 +42,7 @@ export default function Home() {
     setForm({
       name: product.name,
       description: product.description || '',
+      id_category: product.id_category || '', // Menyesuaikan dengan data dari DB
       price: product.price,
     });
   }
@@ -58,6 +60,7 @@ export default function Home() {
       const url = editingId ? `/api/products/${editingId}` : '/api/products';
       const method = editingId ? 'PUT' : 'POST';
 
+      // form state sekarang sudah berisi id_category yang diambil dari dropdown
       const res = await fetch(url, {
         method,
         headers: { 'Content-Type': 'application/json' },
@@ -122,6 +125,22 @@ export default function Home() {
               rows={3}
               placeholder="Deskripsi singkat produk (opsional)"
             />
+          </div>
+
+          <div className="form-row">
+            <label htmlFor="id_category">Kategori</label>
+            <select
+              id="id_category"
+              name="id_category"
+              value={form.id_category}
+              onChange={handleChange}
+              required
+            >
+              <option value="" disabled>Pilih Kategori</option>
+              <option value="1">Makanan</option>
+              <option value="2">Minuman</option>
+              <option value="3">Snack</option>
+            </select>
           </div>
 
           <div className="form-row">
